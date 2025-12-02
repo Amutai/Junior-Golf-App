@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "react": "^18.0.0",
-    "@junior-golf/shared": "workspace:*"
+    "@junior-golf/shared": "*"
   },
   "devDependencies": {
     "@types/react": "^18.0.0",

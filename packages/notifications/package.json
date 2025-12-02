@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "nodemailer": "^6.9.0",
-    "@junior-golf/shared": "workspace:*"
+    "@junior-golf/shared": "*"
   },
   "devDependencies": {
     "@types/nodemailer": "^6.4.0",

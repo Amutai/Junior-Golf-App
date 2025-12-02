@@ -17,10 +17,10 @@
     "express": "^4.18.0",
     "prisma": "^5.0.0",
     "@prisma/client": "^5.0.0",
-    "@junior-golf/shared": "workspace:*",
-    "@junior-golf/auth": "workspace:*",
-    "@junior-golf/payments": "workspace:*",
-    "@junior-golf/notifications": "workspace:*"
+    "@junior-golf/shared": "*",
+    "@junior-golf/auth": "*",
+    "@junior-golf/payments": "*",
+    "@junior-golf/notifications": "*"
   },
   "devDependencies": {
     "@types/node": "^20.0.0",

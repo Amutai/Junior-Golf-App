@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "stripe": "^13.0.0",
-    "@junior-golf/shared": "workspace:*"
+    "@junior-golf/shared": "*"
   },
   "devDependencies": {
     "@types/stripe": "^8.0.0",

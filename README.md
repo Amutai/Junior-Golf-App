@@ -1,61 +1,82 @@
-# Junior-Golf-App
-
-Here's this project's description:
-
----
-
 # Junior Golfers Kenya Membership App
 
-## Project Overview
-The **Junior Golfers Kenya Membership App** is a web and mobile platform designed to streamline the registration and membership management process for junior golfers in Kenya. The app simplifies how members sign up, verify their membership, and renew their annual subscription. It also includes smart card and QR code verification technology to allow seamless entry to golf clubs and event participation.
+A modular monolithic client-server application for managing junior golf memberships in Kenya.
+
+## Architecture
+
+This project uses a **modular monolithic architecture** optimized for 1000+ users with horizontal scaling capabilities.
+
+### Structure
+
+```
+├── apps/                    # Client applications
+│   ├── web/                # Next.js web application
+│   ├── mobile/             # React Native mobile app
+│   └── admin/              # Admin dashboard
+├── services/               # Backend services
+│   ├── api/               # Express.js API server
+│   └── database/          # Database schemas & migrations
+├── packages/              # Shared packages
+│   ├── shared/           # Common types & utilities
+│   ├── ui/               # Reusable UI components
+│   ├── auth/             # Authentication logic
+│   ├── payments/         # Payment processing
+│   └── notifications/    # Email/SMS notifications
+├── docs/                 # Documentation
+├── scripts/              # Build & deployment scripts
+├── tools/                # Development tools
+└── config/               # Configuration files
+```
+
+## Quick Start
+
+```bash
+# Install dependencies
+npm install
+
+# Start development servers
+npm run dev
+
+# Run tests
+npm test
+
+# Build all packages
+npm run build
+```
 
 ## Features
-### 1. **User Registration & Profile Management**
-   - New members can easily register with their bio-data and profile picture.
-   - Users can update personal information such as their email, password, and profile picture.
-   - Password reset feature via email verification.
-   
-### 2. **Membership Subscription & Payment**
-   - Annual subscription plans with secure payment options via M-PESA and Stripe.
-   - Automatic subscription status updates upon successful payment.
-   - Subscription expiry notifications to alert members when their renewal is due.
 
-### 3. **Membership Verification**
-   - QR code-based membership verification system for club entry.
-   - NFC-enabled smart card integration for quick tap-based membership validation.
-   - Admin panel for golf clubs to scan and verify membership status.
-
-### 4. **Event & Tournament Management**
-   - Members can browse and register for upcoming golf events and tournaments.
-   - Golf clubs can create, manage, and promote events through the admin dashboard.
-
-### 5. **Notifications**
-   - Push notifications for subscription reminders and event alerts.
-   - Email notifications for important updates and membership status.
-
-### 6. **Security**
-   - Secure authentication using Firebase or JWT.
-   - SSL encryption for secure communication and data protection.
-   - Two-factor authentication (2FA) for added account security.
+- **Multi-platform**: Web, mobile, and admin interfaces
+- **Secure Authentication**: JWT-based with 2FA support
+- **Payment Integration**: M-PESA and Stripe support
+- **QR/NFC Verification**: Club entry verification
+- **Event Management**: Tournament registration
+- **Real-time Notifications**: Push and email notifications
 
 ## Tech Stack
-- **Frontend (Web):** React.js
-- **Mobile (Cross-platform):** React Native
-- **Backend:** Node.js with Express.js or Django/Flask
-- **Database:** PostgreSQL or MongoDB
-- **Authentication:** Firebase Authentication / JWT
-- **Payments:** M-PESA API, Stripe for international payments
-- **Cloud Hosting:** AWS or Google Cloud
-- **Push Notifications:** Firebase Cloud Messaging (FCM)
-- **QR/NFC Integration:** Libraries for QR code generation and NFC reader SDK
 
-## Project Goals
-This project aims to digitize the membership process for junior golfers, making it easier for clubs and members to manage subscriptions, track membership status, and handle event registrations. With the integration of modern technologies like QR codes and NFC, the app ensures secure and efficient access to golf clubs.
+- **Frontend**: Next.js, React Native, TypeScript
+- **Backend**: Node.js, Express.js, Prisma
+- **Database**: PostgreSQL with Redis caching
+- **Authentication**: JWT with bcrypt
+- **Payments**: Stripe, M-PESA API
+- **Infrastructure**: Docker, GitHub Actions
+
+## Development
+
+See individual package READMEs for specific setup instructions:
+- [Web App](./apps/web/README.md)
+- [Mobile App](./apps/mobile/README.md)
+- [API Service](./services/api/README.md)
 
 ## Contributing
-We welcome contributions! If you would like to contribute, please fork the repository and submit a pull request, or reach out with any suggestions or issues in the **Issues** section.
+
+1. Fork the repository
+2. Create a feature branch
+3. Follow conventional commits
+4. Ensure tests pass
+5. Submit a pull request
 
 ## License
-This project is licensed under the MIT License. See the [LICENSE](./LICENSE) file for more details.
 
----
+MIT License - see [LICENSE](./LICENSE) file.
