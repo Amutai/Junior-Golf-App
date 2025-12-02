@@ -1,0 +1,27 @@
+# Global code owners
+* @amutai
+
+# Applications
+/apps/web/ @amutai
+/apps/mobile/ @amutai
+/apps/admin/ @amutai
+
+# Services
+/services/api/ @amutai
+/services/database/ @amutai
+
+# Packages
+/packages/shared/ @amutai
+/packages/ui/ @amutai
+/packages/auth/ @amutai
+/packages/payments/ @amutai
+/packages/notifications/ @amutai
+
+# Infrastructure and CI/CD
+/.github/ @amutai
+/docker-compose*.yml @amutai
+/Dockerfile* @amutai
+
+# Security and Configuration
+/sonar-project.properties @amutai
+/commitlint.config.js @amutai
