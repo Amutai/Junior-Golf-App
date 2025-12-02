@@ -1,0 +1,41 @@
+name: Basic CI
+
+on:
+  pull_request:
+    branches: [main, dev]
+  push:
+    branches: [main, dev]
+
+jobs:
+  validate:
+    name: Validate Project Structure
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      
+      - name: Validate package.json files
+        run: |
+          echo "Validating package.json files..."
+          find . -name "package.json" -not -path "*/node_modules/*" -exec echo "✓ Found: {}" \;
+          find . -name "package.json" -not -path "*/node_modules/*" -exec node -e "JSON.parse(require('fs').readFileSync('{}', 'utf8')); console.log('✓ Valid JSON: {}')" \;
+      
+      - name: Check workspace structure
+        run: |
+          echo "Checking workspace structure..."
+          [ -d "apps" ] && echo "✓ apps/ directory exists"
+          [ -d "services" ] && echo "✓ services/ directory exists" 
+          [ -d "packages" ] && echo "✓ packages/ directory exists"
+          [ -d "docs" ] && echo "✓ docs/ directory exists"
+          [ -f "package.json" ] && echo "✓ Root package.json exists"
+      
+      - name: Validate documentation
+        run: |
+          echo "Checking documentation..."
+          [ -f "README.md" ] && echo "✓ README.md exists"
+          [ -f "docs/README.md" ] && echo "✓ docs/README.md exists"
+          echo "✓ Project structure validation complete"

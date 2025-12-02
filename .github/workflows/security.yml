@@ -1,10 +1,12 @@
 name: Security Checks
 
 on:
-  pull_request:
-    branches: [main, dev]
-  schedule:
-    - cron: '0 2 * * 1' # Weekly on Monday at 2 AM
+  # Disabled until CodeQL is enabled in repository settings
+  # pull_request:
+  #   branches: [main, dev]
+  # schedule:
+  #   - cron: '0 2 * * 1' # Weekly on Monday at 2 AM
+  workflow_dispatch: # Manual trigger only
 
 jobs:
   codeql:
