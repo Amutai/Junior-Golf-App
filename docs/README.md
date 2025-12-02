@@ -12,6 +12,7 @@ This directory contains comprehensive technical documentation for the Junior Gol
 ### 🚀 Development
 - [Getting Started](./getting-started.md) - Setup guide for new developers
 - [Development Workflow](./workflow.md) - Git workflow, PR process, and code standards
+- [Branch Protection Strategy](./branch-protection-strategy.md) - Repository security and workflow configuration
 - [Testing Strategy](./testing.md) - Unit, integration, and E2E testing approaches
 
 ### 🔧 Operations
