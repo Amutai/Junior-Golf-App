@@ -6,6 +6,10 @@ on:
   #   branches: [main, dev]
   workflow_dispatch: # Manual trigger only
 
+permissions:
+  contents: read
+  pull-requests: read
+
 jobs:
   # Note: SonarCloud and CodeQL require repository setup
   # Enable in Settings > Security > Code scanning

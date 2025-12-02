@@ -8,14 +8,15 @@ on:
   #   - cron: '0 2 * * 1' # Weekly on Monday at 2 AM
   workflow_dispatch: # Manual trigger only
 
+permissions:
+  contents: read
+  security-events: write
+  actions: read
+
 jobs:
   codeql:
     name: CodeQL Analysis
     runs-on: ubuntu-latest
-    permissions:
-      actions: read
-      contents: read
-      security-events: write
     
     strategy:
       matrix:
