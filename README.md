@@ -2,7 +2,7 @@
 
 A modular monolithic client-server application for managing junior golf memberships in Kenya.
 
-## Architecture
+## Architecture.
 
 This project uses a **modular monolithic architecture** optimized for 1000+ users with horizontal scaling capabilities.
 
