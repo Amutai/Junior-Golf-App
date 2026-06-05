@@ -1,0 +1,17 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/JuniorGolf.Admin/JuniorGolf.Admin.csproj" />
+    <Project Path="src/JuniorGolf.AI/JuniorGolf.AI.csproj" />
+    <Project Path="src/JuniorGolf.Api/JuniorGolf.Api.csproj" />
+    <Project Path="src/JuniorGolf.App/JuniorGolf.App.csproj" />
+    <Project Path="src/JuniorGolf.Core/JuniorGolf.Core.csproj" />
+    <Project Path="src/JuniorGolf.Infrastructure/JuniorGolf.Infrastructure.csproj" />
+    <Project Path="src/JuniorGolf.Shared/JuniorGolf.Shared.csproj" />
+    <Project Path="src/JuniorGolf.Web/JuniorGolf.Web.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/JuniorGolf.Api.Tests/JuniorGolf.Api.Tests.csproj" />
+    <Project Path="tests/JuniorGolf.Core.Tests/JuniorGolf.Core.Tests.csproj" />
+    <Project Path="tests/JuniorGolf.Infrastructure.Tests/JuniorGolf.Infrastructure.Tests.csproj" />
+  </Folder>
+</Solution>

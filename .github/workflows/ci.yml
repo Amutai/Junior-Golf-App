@@ -1,70 +1,43 @@
-name: CI Pipeline
+name: CI
 
 on:
-  # Disabled until source code is implemented
-  # pull_request:
-  #   branches: [main, dev]
-  # push:
-  #   branches: [main, dev]
-  workflow_dispatch: # Manual trigger only
-
-permissions:
-  contents: read
-  security-events: write
-  actions: read
-
-env:
-  NODE_VERSION: '18'
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
 
 jobs:
-  # Validate package structure
-  validate-structure:
+  build-and-test:
     runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_DB: junior_golf_test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: test_password
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
         with:
-          node-version: ${{ env.NODE_VERSION }}
-      
-      - name: Validate package.json files
-        run: |
-          find . -name "package.json" -not -path "*/node_modules/*" -exec echo "Validating {}" \;
-          find . -name "package.json" -not -path "*/node_modules/*" -exec node -e "JSON.parse(require('fs').readFileSync('{}', 'utf8'))" \;
+          dotnet-version: '10.0.x'
 
+      - name: Restore dependencies
+        run: dotnet restore
 
+      - name: Build
+        run: dotnet build --no-restore --configuration Release
 
-
-
-  # Security Scanning
-  security-scan:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      
-      - name: Run Trivy vulnerability scanner
-        uses: aquasecurity/trivy-action@master
-        with:
-          scan-type: 'fs'
-          scan-ref: '.'
-      
-      - name: Check for package.json files
-        run: find . -name "package.json" -not -path "*/node_modules/*"
-
-  # Docker Build Test
-  docker-build:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        service: [web, api]
-    steps:
-      - uses: actions/checkout@v4
-      
-      - name: Build Docker image
-        run: |
-          if [ -f ./${{ matrix.service }}/Dockerfile ]; then
-            if [ "${{ matrix.service }}" = "web" ]; then
-            docker build -t junior-golf-web:test ./apps/web
-          elif [ "${{ matrix.service }}" = "api" ]; then
-            docker build -t junior-golf-api:test ./services/api
-          fi
-          fi
+      - name: Test
+        run: dotnet test --no-build --configuration Release --verbosity normal

@@ -1,81 +1,99 @@
-# Junior Golfers Kenya Membership App
+# Junior Golfers Kenya
 
-A modular monolithic client-server application for managing junior golf memberships in Kenya.
+A cross-platform membership management application for junior golf in Kenya, built with .NET.
 
-## Architecture.
+## Architecture
 
-This project uses a **modular monolithic architecture** optimized for 1000+ users with horizontal scaling capabilities.
+**Modular monolith** with shared code across all platforms — targeting 1000+ users with horizontal scaling.
 
-### Structure
+### Solution Structure
 
 ```
-├── apps/                    # Client applications
-│   ├── web/                # Next.js web application
-│   ├── mobile/             # React Native mobile app
-│   └── admin/              # Admin dashboard
-├── services/               # Backend services
-│   ├── api/               # Express.js API server
-│   └── database/          # Database schemas & migrations
-├── packages/              # Shared packages
-│   ├── shared/           # Common types & utilities
-│   ├── ui/               # Reusable UI components
-│   ├── auth/             # Authentication logic
-│   ├── payments/         # Payment processing
-│   └── notifications/    # Email/SMS notifications
-├── docs/                 # Documentation
-├── scripts/              # Build & deployment scripts
-├── tools/                # Development tools
-└── config/               # Configuration files
+├── src/
+│   ├── JuniorGolf.Api/              # ASP.NET Core Web API
+│   ├── JuniorGolf.Web/              # Blazor WebAssembly (browser)
+│   ├── JuniorGolf.App/              # .NET MAUI Blazor Hybrid (Android/iOS/Windows/macOS)
+│   ├── JuniorGolf.Admin/            # Blazor Server (admin dashboard)
+│   ├── JuniorGolf.Core/             # Domain entities, interfaces, enums
+│   ├── JuniorGolf.Infrastructure/   # EF Core, Redis, payments, notifications
+│   ├── JuniorGolf.AI/               # Semantic Kernel, ML.NET
+│   └── JuniorGolf.Shared/           # DTOs, shared Razor components
+├── tests/
+│   ├── JuniorGolf.Api.Tests/
+│   ├── JuniorGolf.Core.Tests/
+│   └── JuniorGolf.Infrastructure.Tests/
+├── docs/
+├── .github/
+│   └── workflows/
+├── docker-compose.yml
+└── JuniorGolf.sln
 ```
+
+## Platforms
+
+| Platform | Technology |
+|----------|-----------|
+| Android | .NET MAUI Blazor Hybrid |
+| iOS | .NET MAUI Blazor Hybrid |
+| Windows | .NET MAUI Blazor Hybrid |
+| macOS | .NET MAUI (Mac Catalyst) |
+| Web | Blazor WebAssembly |
+
+## Tech Stack
+
+- **Language**: C# / .NET 10
+- **API**: ASP.NET Core Web API
+- **ORM**: Entity Framework Core
+- **Database**: PostgreSQL + Redis
+- **Auth**: ASP.NET Core Identity + JWT
+- **Payments**: M-PESA (Daraja API), Stripe
+- **AI**: Microsoft Semantic Kernel
+- **UI**: Blazor + .NET MAUI
+- **Infrastructure**: Docker, GitHub Actions
 
 ## Quick Start
 
 ```bash
-# Install dependencies
-npm install
+# Restore and build
+dotnet restore
+dotnet build
 
-# Start development servers
-npm run dev
+# Run the API
+dotnet run --project src/JuniorGolf.Api
+
+# Run the web app
+dotnet run --project src/JuniorGolf.Web
 
 # Run tests
-npm test
+dotnet test
 
-# Build all packages
-npm run build
+# Docker (API + PostgreSQL + Redis)
+docker-compose up
 ```
 
-## Features
+## Development Workflow
 
-- **Multi-platform**: Web, mobile, and admin interfaces
-- **Secure Authentication**: JWT-based with 2FA support
-- **Payment Integration**: M-PESA and Stripe support
-- **QR/NFC Verification**: Club entry verification
-- **Event Management**: Tournament registration
-- **Real-time Notifications**: Push and email notifications
+- **Branching**: `main` → `develop` → `feature/<issue>-description`
+- **Commits**: Conventional commits (`feat:`, `fix:`, `docs:`)
+- **PRs**: Reference GitHub Issues (`Closes #12`)
+- **Milestones**: Track progress via GitHub Milestones
 
-## Tech Stack
+## Milestones
 
-- **Frontend**: Next.js, React Native, TypeScript
-- **Backend**: Node.js, Express.js, Prisma
-- **Database**: PostgreSQL with Redis caching
-- **Authentication**: JWT with bcrypt
-- **Payments**: Stripe, M-PESA API
-- **Infrastructure**: Docker, GitHub Actions
-
-## Development
-
-See individual package READMEs for specific setup instructions:
-- [Web App](./apps/web/README.md)
-- [Mobile App](./apps/mobile/README.md)
-- [API Service](./services/api/README.md)
+1. **M1: Foundation** — Scaffold, CI/CD, database, auth
+2. **M2: Core Membership** — Member CRUD, payments, QR verification
+3. **M3: All-Platform App** — MAUI Blazor Hybrid, shared components
+4. **M4: Admin & Events** — Dashboard, tournament management
+5. **M5: AI Integration** — Chatbot, recommendations, analytics
+6. **M6: Scale & Polish** — Performance, security, monitoring
 
 ## Contributing
 
-1. Fork the repository
-2. Create a feature branch
+1. Pick an open GitHub Issue
+2. Create a feature branch from `develop`
 3. Follow conventional commits
-4. Ensure tests pass
-5. Submit a pull request
+4. Ensure `dotnet test` passes
+5. Open a PR referencing the issue
 
 ## License
 
