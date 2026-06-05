@@ -34,10 +34,39 @@ jobs:
           dotnet-version: '10.0.x'
 
       - name: Restore dependencies
-        run: dotnet restore
+        run: dotnet restore --ignore-failed-sources
+        env:
+          DOTNET_SKIP_WORKLOAD_INTEGRITY_CHECK: true
 
-      - name: Build
-        run: dotnet build --no-restore --configuration Release
+      - name: Build (excluding MAUI)
+        run: |
+          dotnet build src/JuniorGolf.Api --no-restore --configuration Release
+          dotnet build src/JuniorGolf.Web --no-restore --configuration Release
+          dotnet build src/JuniorGolf.Admin --no-restore --configuration Release
+          dotnet build src/JuniorGolf.Core --no-restore --configuration Release
+          dotnet build src/JuniorGolf.Infrastructure --no-restore --configuration Release
+          dotnet build src/JuniorGolf.AI --no-restore --configuration Release
+          dotnet build src/JuniorGolf.Shared --no-restore --configuration Release
+          dotnet build tests/JuniorGolf.Api.Tests --no-restore --configuration Release
+          dotnet build tests/JuniorGolf.Core.Tests --no-restore --configuration Release
+          dotnet build tests/JuniorGolf.Infrastructure.Tests --no-restore --configuration Release
 
       - name: Test
         run: dotnet test --no-build --configuration Release --verbosity normal
+
+  build-maui:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Install MAUI workload
+        run: dotnet workload install maui
+
+      - name: Build MAUI app
+        run: dotnet build src/JuniorGolf.App --configuration Release
