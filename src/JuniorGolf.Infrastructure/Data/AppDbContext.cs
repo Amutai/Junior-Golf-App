@@ -1,10 +1,12 @@
 using JuniorGolf.Core.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace JuniorGolf.Infrastructure.Data;
 
 /// <summary>
 /// EF Core DbContext — the bridge between domain entities and PostgreSQL.
+/// Inherits IdentityDbContext to include Identity tables (users, roles, claims).
 ///
 /// Data flow:
 ///   Repository → AppDbContext → Npgsql → PostgreSQL
@@ -12,7 +14,7 @@ namespace JuniorGolf.Infrastructure.Data;
 /// Each DbSet<T> maps to a database table.
 /// OnModelCreating configures column types, indexes, and constraints.
 /// </summary>
-public class AppDbContext : DbContext
+public class AppDbContext : IdentityDbContext<ApplicationUser>
 {
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
