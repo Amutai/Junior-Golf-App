@@ -1,3 +1,4 @@
+using Asp.Versioning;
 using JuniorGolf.Infrastructure;
 using JuniorGolf.Infrastructure.Data;
 using Microsoft.AspNetCore.Identity;
@@ -10,6 +11,24 @@ builder.Services.AddInfrastructure(builder.Configuration);
 
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
+
+// Health checks — verifies PostgreSQL is reachable
+builder.Services.AddHealthChecks()
+    .AddNpgSql(
+        builder.Configuration.GetConnectionString("DefaultConnection")!,
+        name: "postgresql",
+        tags: ["db", "ready"]);
+
+// API versioning — URL segment based (e.g. /api/v1/auth/login)
+builder.Services.AddApiVersioning(options =>
+{
+    options.DefaultApiVersion = new ApiVersion(1, 0);
+    options.AssumeDefaultVersionWhenUnspecified = true;
+    options.ReportApiVersions = true;
+    options.ApiVersionReader = ApiVersionReader.Combine(
+        new UrlSegmentApiVersionReader(),
+        new HeaderApiVersionReader("X-Api-Version"));
+});
 
 var app = builder.Build();
 
@@ -38,6 +57,15 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 
-app.MapGet("/health", () => Results.Ok(new { status = "healthy" }));
+// Health endpoints
+app.MapHealthChecks("/health", new Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckOptions
+{
+    Predicate = _ => false // Liveness: always returns healthy if app is running
+});
+
+app.MapHealthChecks("/health/ready", new Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckOptions
+{
+    Predicate = check => check.Tags.Contains("ready") // Readiness: checks DB connectivity
+});
 
 app.Run();
