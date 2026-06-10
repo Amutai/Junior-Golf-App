@@ -12,12 +12,16 @@ builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 
-// Health checks — verifies PostgreSQL is reachable
+// Health checks — verifies PostgreSQL and Redis are reachable
 builder.Services.AddHealthChecks()
     .AddNpgSql(
         builder.Configuration.GetConnectionString("DefaultConnection")!,
         name: "postgresql",
-        tags: ["db", "ready"]);
+        tags: ["db", "ready"])
+    .AddRedis(
+        builder.Configuration.GetConnectionString("Redis")!,
+        name: "redis",
+        tags: ["cache", "ready"]);
 
 // API versioning — URL segment based (e.g. /api/v1/auth/login)
 builder.Services.AddApiVersioning(options =>
