@@ -3,6 +3,7 @@ using JuniorGolf.Core.Entities;
 using JuniorGolf.Core.Interfaces;
 using JuniorGolf.Infrastructure.Data;
 using JuniorGolf.Infrastructure.Identity;
+using JuniorGolf.Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -22,6 +23,7 @@ namespace JuniorGolf.Infrastructure;
 ///   - ASP.NET Core Identity (UserManager, RoleManager)
 ///   - JWT Bearer authentication
 ///   - IAuthService → AuthService
+///   - Redis distributed cache (ICacheService)
 /// </summary>
 public static class DependencyInjection
 {
@@ -75,6 +77,15 @@ public static class DependencyInjection
 
         // Auth service
         services.AddScoped<IAuthService, AuthService>();
+
+        // Redis distributed cache
+        services.AddStackExchangeRedisCache(options =>
+        {
+            options.Configuration = configuration.GetConnectionString("Redis");
+            options.InstanceName = "JuniorGolf:";
+        });
+
+        services.AddSingleton<ICacheService, RedisCacheService>();
 
         return services;
     }
