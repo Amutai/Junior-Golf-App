@@ -26,7 +26,7 @@ A cross-platform membership management application for junior golf in Kenya, bui
 ├── .github/
 │   └── workflows/
 ├── docker-compose.yml
-└── JuniorGolf.sln
+└── JuniorGolf.slnx
 ```
 
 ## Platforms
@@ -54,6 +54,9 @@ A cross-platform membership management application for junior golf in Kenya, bui
 ## Quick Start
 
 ```bash
+# Install required workloads
+dotnet workload install wasm-tools maui
+
 # Restore and build
 dotnet restore
 dotnet build
