@@ -78,3 +78,6 @@ publish/
 
 # User secrets (IDE-managed)
 appsettings.Development.json
+
+# Launch settings (local dev profiles)
+**/Properties/launchSettings.json
