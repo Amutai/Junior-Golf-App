@@ -12,51 +12,51 @@ obj/
 [Rr]elease/
 x64/
 x86/
-[Ww][Ii][Nn]32/
-[Aa][Rr][Mm]/
-[Aa][Rr][Mm]64/
+build/
 bld/
-[Bb]in/
-[Oo]bj/
-[Ll]og/
-[Ll]ogs/
-
-# Visual Studio
-.vs/
-*.sln.iml
-launchSettings.json
-
-# Rider
-.idea/
-
-# VS Code
-.vscode/
 
 # NuGet
 *.nupkg
-*.snupkg
-.nuget/
-nuget.exe
+**/packages/*
+!**/packages/build/
+*.nuget.props
+*.nuget.targets
+project.lock.json
+
+# VS / Rider
+.vs/
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# MAUI / Android / iOS
+*.apk
+*.aab
+*.ipa
+*.dSYM.zip
+*.dSYM
 
 # Test results
 TestResults/
-*.trx
 coverage/
-*.coveragexml
+*.lcov
 
-# Environment
-.env
-.env.local
-.env.*.local
-appsettings.Development.json
-
-# OS
+# OS generated
 .DS_Store
+.DS_Store?
 Thumbs.db
 ehthumbs.db
 
+# Environment files
+.env
+.env.local
+.env.*.local
+
 # Docker
-.dockerignore
+postgres_data/
+redis_data/
 
 # Certificates and keys
 *.pem
@@ -65,16 +65,16 @@ ehthumbs.db
 *.p12
 *.pfx
 
-# MAUI
-*.ipa
-*.apk
-*.aab
+# Logs
+*.log
+logs/
 
 # Temp
 tmp/
 temp/
-*.tmp
-*.bak
 
-# Publish output
+# Published output
 publish/
+
+# User secrets (IDE-managed)
+appsettings.Development.json

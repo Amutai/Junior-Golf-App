@@ -1,59 +1,35 @@
-# Branch Protection Rules Configuration
+# Branch Protection Rules
 
-## Main Branch Protection
-Configure these settings for the `main` branch:
+## Main Branch (`main`)
 
-### Required Status Checks
-- [x] Require status checks to pass before merging
-- [x] Require branches to be up to date before merging
+| Setting | Value |
+|---------|-------|
+| Require PR before merging | ✅ |
+| Required approving reviews | 1 |
+| Dismiss stale reviews on new commits | ✅ |
+| Require status checks to pass | ✅ |
+| Required checks | `build-and-test`, `build-maui`, `Analyze` |
+| Require branches up to date | ✅ |
+| Enforce for admins | ✅ |
+| Allow force pushes | ❌ |
+| Allow deletions | ❌ |
 
-**Required checks:**
-- `web-app`
-- `mobile-app` 
-- `api-service`
-- `security-scan`
-- `docker-build`
-- `codeql`
-- `sonarcloud`
+## Develop Branch (`develop`)
 
-### Pull Request Requirements
-- [x] Require pull request reviews before merging
-- **Required approving reviews:** 2
-- [x] Dismiss stale reviews when new commits are pushed
-- [x] Require review from code owners
-- [x] Restrict pushes that create files larger than 100MB
+| Setting | Value |
+|---------|-------|
+| Require PR before merging | ✅ |
+| Required approving reviews | 1 |
+| Dismiss stale reviews on new commits | ✅ |
+| Require status checks to pass | ✅ |
+| Required checks | `build-and-test` |
+| Require branches up to date | ✅ |
+| Enforce for admins | ❌ |
+| Allow force pushes | ❌ |
+| Allow deletions | ❌ |
 
-### Additional Restrictions
-- [x] Restrict pushes to matching branches
-- [x] Allow force pushes: **Disabled**
-- [x] Allow deletions: **Disabled**
+## Notes
 
-## Dev Branch Protection
-Configure these settings for the `dev` branch:
-
-### Required Status Checks
-- [x] Require status checks to pass before merging
-- [x] Require branches to be up to date before merging
-
-**Required checks:**
-- `web-app`
-- `mobile-app`
-- `api-service`
-- `security-scan`
-
-### Pull Request Requirements
-- [x] Require pull request reviews before merging
-- **Required approving reviews:** 1
-- [x] Dismiss stale reviews when new commits are pushed
-- [x] Restrict pushes that create files larger than 100MB
-
-### Additional Restrictions
-- [x] Allow force pushes: **Disabled**
-- [x] Allow deletions: **Disabled**
-
-## Implementation Steps
-
-1. Go to repository Settings → Branches
-2. Click "Add rule" for each branch
-3. Configure settings as specified above
-4. Ensure all team members have appropriate permissions
+- Rules are enforced via GitHub API (configured programmatically)
+- Status check names come from `.github/workflows/ci.yml` job names and `codeql.yml`
+- Push protection blocks commits containing secrets regardless of branch rules

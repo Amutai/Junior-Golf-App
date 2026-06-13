@@ -33,26 +33,33 @@ jobs:
         with:
           dotnet-version: '10.0.x'
 
-      - name: Restore dependencies
-        run: dotnet restore --ignore-failed-sources
-        env:
-          DOTNET_SKIP_WORKLOAD_INTEGRITY_CHECK: true
+      - name: Restore and build (excluding MAUI)
+        run: |
+          dotnet restore src/JuniorGolf.Core
+          dotnet restore src/JuniorGolf.Shared
+          dotnet restore src/JuniorGolf.Infrastructure
+          dotnet restore src/JuniorGolf.AI
+          dotnet restore src/JuniorGolf.Api
+          dotnet restore src/JuniorGolf.Web
+          dotnet restore src/JuniorGolf.Admin
+          dotnet restore tests/JuniorGolf.Api.Tests
+          dotnet restore tests/JuniorGolf.Core.Tests
+          dotnet restore tests/JuniorGolf.Infrastructure.Tests
 
-      - name: Build (excluding MAUI)
+      - name: Build
         run: |
           dotnet build src/JuniorGolf.Api --no-restore --configuration Release
           dotnet build src/JuniorGolf.Web --no-restore --configuration Release
           dotnet build src/JuniorGolf.Admin --no-restore --configuration Release
-          dotnet build src/JuniorGolf.Core --no-restore --configuration Release
-          dotnet build src/JuniorGolf.Infrastructure --no-restore --configuration Release
-          dotnet build src/JuniorGolf.AI --no-restore --configuration Release
-          dotnet build src/JuniorGolf.Shared --no-restore --configuration Release
           dotnet build tests/JuniorGolf.Api.Tests --no-restore --configuration Release
           dotnet build tests/JuniorGolf.Core.Tests --no-restore --configuration Release
           dotnet build tests/JuniorGolf.Infrastructure.Tests --no-restore --configuration Release
 
       - name: Test
-        run: dotnet test --no-build --configuration Release --verbosity normal
+        run: |
+          dotnet test tests/JuniorGolf.Api.Tests --no-build --configuration Release --verbosity normal
+          dotnet test tests/JuniorGolf.Core.Tests --no-build --configuration Release --verbosity normal
+          dotnet test tests/JuniorGolf.Infrastructure.Tests --no-build --configuration Release --verbosity normal
 
   build-maui:
     runs-on: windows-latest
