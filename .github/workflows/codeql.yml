@@ -1,0 +1,54 @@
+name: CodeQL
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+  schedule:
+    - cron: '0 6 * * 1' # Weekly Monday 6am UTC
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+
+    strategy:
+      fail-fast: false
+      matrix:
+        language: ['csharp']
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: ${{ matrix.language }}
+          queries: security-and-quality
+
+      - name: Build projects (excluding MAUI)
+        run: |
+          dotnet restore src/JuniorGolf.Core
+          dotnet restore src/JuniorGolf.Infrastructure
+          dotnet restore src/JuniorGolf.Api
+          dotnet restore src/JuniorGolf.Shared
+          dotnet restore src/JuniorGolf.AI
+          dotnet restore src/JuniorGolf.Web
+          dotnet restore src/JuniorGolf.Admin
+          dotnet build src/JuniorGolf.Api --no-restore --configuration Release
+          dotnet build src/JuniorGolf.Web --no-restore --configuration Release
+          dotnet build src/JuniorGolf.Admin --no-restore --configuration Release
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
+        with:
+          category: "/language:${{ matrix.language }}"

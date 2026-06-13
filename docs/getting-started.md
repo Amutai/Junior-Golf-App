@@ -11,11 +11,14 @@
 
 ```bash
 # Clone the repository
-git clone <repo-url>
+git clone https://github.com/Amutai/Junior-Golf-App.git
 cd Junior-Golf-App
 
 # Copy environment file
+# Linux/macOS:
 cp .env.example .env
+# Windows:
+# copy .env.example .env
 # Edit .env with your values
 
 # Restore dependencies

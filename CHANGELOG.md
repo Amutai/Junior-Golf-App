@@ -8,31 +8,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
-- Initial project setup with modular monolithic architecture
-- Web application with Next.js
-- Mobile application with React Native/Expo
-- Admin dashboard for system management
-- API service with Express.js and Prisma
-- Shared packages for common functionality
-- CI/CD pipeline with GitHub Actions
-- Comprehensive testing setup
-- Security scanning and code quality checks
+- CodeQL security scanning and Dependabot configuration
+- Redis distributed caching (`ICacheService`)
+- Health checks and API versioning
+- ASP.NET Core Identity + JWT authentication
+- Entity Framework Core with PostgreSQL
+- Solution scaffold (API, Web, Admin, MAUI App, Core, Infrastructure, AI, Shared)
+- CI/CD pipeline with GitHub Actions (build, test, MAUI build, CodeQL)
+- Docker Compose for local development (PostgreSQL + Redis + API)
+- Security policy, branch protection, secret scanning, push protection
 
 ### Infrastructure
-- Docker containerization
+- .NET 10 modular monolith architecture
 - PostgreSQL database with Redis caching
-- Monorepo structure with npm workspaces
-- TypeScript configuration across all packages
-- ESLint and Prettier for code formatting
-- Husky git hooks for pre-commit checks
+- Secure credential management via environment variables
+- Automated dependency updates via Dependabot
 
-## [1.0.0] - TBD
+## [1.0.0] - TBD (Milestone 2: Core Membership)
 
-### Added
-- User registration and authentication
-- Membership subscription management
+### Planned
+- Member CRUD operations
+- M-PESA and Stripe payment processing
 - QR code generation and verification
-- Payment processing (M-PESA and Stripe)
-- Event management system
+- Event management
 - Push notifications
-- Admin dashboard functionality
