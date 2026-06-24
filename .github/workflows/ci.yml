@@ -10,13 +10,18 @@ jobs:
   build-and-test:
     runs-on: ubuntu-latest
 
+    env:
+      POSTGRES_DB: junior_golf_test
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: test_password
+
     services:
       postgres:
         image: postgres:16
         env:
-          POSTGRES_DB: junior_golf_test
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: test_password
+          POSTGRES_DB: ${{ env.POSTGRES_DB }}
+          POSTGRES_USER: ${{ env.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
         ports:
           - 5432:5432
         options: >-
@@ -54,6 +59,13 @@ jobs:
           dotnet build tests/JuniorGolf.Api.Tests --no-restore --configuration Release
           dotnet build tests/JuniorGolf.Core.Tests --no-restore --configuration Release
           dotnet build tests/JuniorGolf.Infrastructure.Tests --no-restore --configuration Release
+
+      - name: Validate migrations
+        run: |
+          dotnet tool install --global dotnet-ef
+          dotnet ef migrations bundle --project src/JuniorGolf.Infrastructure --startup-project src/JuniorGolf.Api --no-build --configuration Release
+        env:
+          ConnectionStrings__DefaultConnection: "Host=localhost;Database=${{ env.POSTGRES_DB }};Username=${{ env.POSTGRES_USER }};Password=${{ env.POSTGRES_PASSWORD }}"
 
       - name: Test
         run: |
